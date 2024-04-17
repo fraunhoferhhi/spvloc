@@ -1,7 +1,5 @@
 # SPVLoc: Semantic Panoramic Viewport Matching for 6D Camera Localization in Unseen Environments
 
-**Niklas Gard, Anna Hilsmann and Peter Eisert**
-
 ## Project Page (coming soon) &nbsp;|&nbsp; [Paper](https://arxiv.org/abs/2404.10527) &nbsp;|&nbsp; Presentation (coming soon)
 
 ![SPVLoc Overview](assets/overview.png)
