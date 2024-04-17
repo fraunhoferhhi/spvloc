@@ -1,6 +1,6 @@
 # SPVLoc: Semantic Panoramic Viewport Matching for 6D Camera Localization in Unseen Environments
 
-## Project Page (coming soon) &nbsp;|&nbsp; [Paper (arXiv)](https://arxiv.org/abs/2404.10527) &nbsp;|&nbsp; Presentation (coming soon)
+## Project Page (coming soon) &nbsp;|&nbsp; [Paper (arXiv)](https://arxiv.org/abs/2404.10527)
 
 ![SPVLoc Overview](assets/overview.png)
 
