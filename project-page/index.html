@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="description"
+      content="A new approach to 3D scene representation, reducing data size significantly while preserving quality, developed by researchers at Fraunhofer Heinrich Hertz Institute HHI and Humboldt University of Berlin."
+    />
+    <meta property="og:title" content="6D Camera Localization in Unseen Scenes" />
+    <meta property="og:description" content="SPVLoc: Semantic Panoramic Viewport Matching for 6D Camera Localization in Unseen Environments." />
+    <meta property="og:url" content="https://fraunhoferhhi.github.io/spvloc/" />
+    <meta property="og:image" content="https://fraunhoferhhi.github.io/spvloc/static/images/overview.png" />
+    <meta property="og:image:width" content="1038" />
+    <meta property="og:image:height" content="630" />
+
+    <meta name="twitter:title" content="6D Camera Localization in Unseen Scenes" />
+    <meta name="twitter:description" content="SPVLoc: Semantic Panoramic Viewport Matching for 6D Camera Localization in Unseen Environments." />
+    <meta name="twitter:image" content="https://fraunhoferhhi.github.io/spvloc/static/images/overview.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="keywords"
+      content="6D Camera Localization, Localization, Multimodal matching, Panorama, Semantic Matching, Domain Gap,  6D Pose Estimation , Fraunhofer Heinrich Hertz Institute, Humboldt University of Berlin"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>SPVLoc Project Page</title>
+    <link rel="icon" type="image/x-icon" href="static/images/favicon.ico" />
+    <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet" />
+
+    <link rel="stylesheet" href="static/css/bulma.min.css" />
+    <link rel="stylesheet" href="static/css/bulma-carousel.min.css" />
+    <link rel="stylesheet" href="static/css/bulma-slider.min.css" />
+    <link rel="stylesheet" href="static/css/fontawesome.all.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css" />
+    <link rel="stylesheet" href="static/css/index.css" />
+    <link rel="stylesheet" href="static/css/style.css" />
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://documentcloud.adobe.com/view-sdk/main.js"></script>
+    <script defer src="static/js/fontawesome.all.min.js"></script>
+    <script src="static/js/bulma-carousel.min.js"></script>
+    <script src="static/js/bulma-slider.min.js"></script>
+    <script src="static/js/index.js"></script>
+    <script src="static/js/vidsplit_multi.js"></script>
+  </head>
+
+  <body>
+    <section class="hero">
+      <div class="hero-body">
+        <div class="container is-max-desktop">
+          <div class="columns is-centered">
+            <div class="column has-text-centered">
+              <h1 class="title is-1 publication-title">SPVLoc: Semantic Panoramic Viewport Matching for 6D Camera Localization in Unseen Environments</h1>
+              <h2 class="is-size-3">ECCV 2024</h2>
+              <br />
+              <div class="is-size-5 publication-authors">
+                <!-- Paper authors -->
+                <span class="author-block">
+                  <a href="https://iphome.hhi.de/gard/index.htm" target="_blank"
+                    >Niklas Gard</a
+                  ><sup><small>1,2</small></sup
+                  >,</span
+                >
+                <span class="author-block">
+                  <a href="https://iphome.hhi.de/hilsmann/index.htm" target="_blank">Anna Hilsmann</a><sup><small>1</small></sup
+                  >,
+                </span>
+                <span class="author-block">
+                  <a href="https://iphome.hhi.de/eisert/" target="_blank">Peter Eisert</a><sup><small>1,2</small></sup>
+                </span>
+              </div>
+
+              <div class="is-size-5 publication-authors">
+                <span class="author-block">
+                  <sup><small>1 </small></sup>Fraunhofer Heinrich Hertz Institute, HHI <br />
+                  <sup><small>2 </small></sup>Humboldt University of Berlin
+                  <br />
+                  <!-- Conferance name and year -->
+                </span>
+              </div>
+
+              <div class="column has-text-centered">
+                <!-- LateXML rendering GitHub page -->
+
+                <div class="publication-links">
+                  <!-- Arxiv PDF link -->
+                  <span class="link-block">
+                    <a href="https://arxiv.org/pdf/2404.10527" target="_blank" class="external-link button is-normal is-rounded is-dark is-disabled">
+                      <span class="icon">
+                        <i class="fas fa-file-pdf"></i>
+                      </span>
+                      <span>Paper</span>
+                    </a>
+                  </span>
+                  <!-- Github link -->
+                  <span class="link-block">
+                    <a
+                      href="https://github.com/fraunhoferhhi/spvloc"
+                      target="_blank"
+                      class="external-link button is-normal is-rounded is-dark"
+                    >
+                      <span class="icon">
+                        <i class="fab fa-github"></i>
+                      </span>
+                      <span>Code</span>
+                    </a>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- Teaser video-->
+    <section class="hero teaser">
+      <div class="container is-max-desktop">
+        <div class="hero-body">
+          <img style="display: block; margin-left: auto; margin-right: auto; width: 70%" src="static/images/overview.png" alt="MY ALT TEXT" />
+          <p></p>
+        </div>
+      </div>
+    </section>
+    <!-- End teaser video -->
+
+    <section class="section hero is-light">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered has-text-centered">
+          <div class="column is-four-fifths">
+            <h2 class="title is-3">Abstract</h2>
+            <div class="content has-text-justified">
+              <p>
+				In this paper, we present SPVLoc, a global indoor localization method that accurately determines the six-dimensional (6D) camera pose of a query image and requires minimal scene-specific prior knowledge and no scene-specific training. Our approach employs a novel matching procedure to localize the perspective camera's viewport, given as an RGB image, within a set of panoramic semantic layout representations of the indoor environment. The panoramas are rendered from an untextured 3D reference model, which only comprises approximate structural information about room shapes, along with door and window annotations. We demonstrate that a straightforward convolutional network structure can successfully achieve image-to-panorama and ultimately image-to-model matching. Through a viewport classification score, we rank reference panoramas and select the best match for the query image. Then, a 6D relative pose is estimated between the chosen panorama and query image. Our experiments demonstrate that this approach not only efficiently bridges the domain gap but also generalizes well to previously unseen scenes that are not part of the training data. Moreover, it achieves superior localization accuracy compared to the state of the art methods and also estimates more degrees of freedom of the camera pose.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!--BibTex citation -->
+    <section class="section" id="BibTeX">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered has-text-centered">
+          <div class="column is-four-fifths">
+            <h2 class="title">BibTeX</h2>
+            <p>If you use our method in your research, please cite our paper. You can use the following BibTeX entry:</p>
+            <br />
+          </div>
+        </div>
+      </div>
+
+      <div class="container is-max-desktop">
+        <pre><code>@article{Gard2024_SPVLOC,
+  title={SPVLoc: Semantic Panoramic Viewport Matching for 6D Camera Localization in Unseen Environments},
+  author={Niklas Gard and Anna Hilsmann and Peter Eisert},
+  journal={arXiv preprint arXiv:2404.10527},
+  year={2024}
+}</code></pre>
+      </div>
+    </section>
+    <!--End BibTex citation -->
+    <footer class="footer">
+      <div class="container">
+        <div class="columns is-centered">
+          <div class="column is-8">
+            <div class="content">
+              <p>
+                This page was built using the
+                <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank">Academic Project Page Template</a>. <br />
+                This website is licensed under a
+                <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank"
+                  >Creative Commons Attribution-ShareAlike 4.0 International License</a
+                >.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Statcounter tracking code -->
+
+    <!-- You can add a tracker to track page visits by creating an account at statcounter.com -->
+
+    <!-- End of Statcounter Code -->
+  </body>
+</html>
