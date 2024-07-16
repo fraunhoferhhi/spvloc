@@ -15,7 +15,7 @@
     Fraunhofer Heinrich Hertz Institute, HHI<sup>1</sup>, Humboldt University of Berlin<sup>2</sup>
 </div>
 
-## [Project page](https://fraunhoferhhi.github.io/spvloc/project-page) &nbsp;|&nbsp; [Paper (arXiv)](https://arxiv.org/abs/2404.10527)
+## [Project page](https://fraunhoferhhi.github.io/spvloc/) &nbsp;|&nbsp; [Paper (arXiv)](https://arxiv.org/abs/2404.10527)
 
 <div>
 
@@ -35,7 +35,7 @@ This is the code repository for the Paper: *SPVLoc: Semantic Panoramic Viewport 
 
 ## Updates
 
-15.07.2024: Added [project page](https://fraunhoferhhi.github.io/spvloc/project-page). \
+15.07.2024: Added [project page](https://fraunhoferhhi.github.io/spvloc/). \
 05.07.2024: We are happy to announce that SPVLoc has been accepted to **ECCV 2024**. The source code is undergoing last preparations and will be added here very soon.
 
 ## Citation
