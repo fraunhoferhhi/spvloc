@@ -1,0 +1,16 @@
+name: spvloc
+channels:
+  - defaults
+  - pytorch
+  - nvidia
+dependencies:
+  - python=3.9.16
+  - pytorch=2.0.0
+  - torchvision=0.15.0
+  - pytorch-cuda=11.7
+  - pybind11=2.12.0
+  - anaconda::cmake
+  - freetype-py
+  - pip
+  - pip:
+    - -r requirements.txt

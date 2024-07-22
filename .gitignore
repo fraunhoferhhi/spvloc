@@ -1,0 +1,17 @@
+__pycache__/
+.vscode/
+runs/
+trained_models/
+temp/
+pretrained_model*/
+lightning_logs/
+default/
+_unused/
+.vs/
+.vscode/
+json_out/
+example/
+plans_data/
+pose_out_debug/
+exeriments*/
+output/

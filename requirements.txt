@@ -1,0 +1,23 @@
+yacs==0.1.8
+numpy==1.23.1
+Pillow==9.5.0
+pytorch-lightning==2.0.2
+tqdm==4.65.0
+matplotlib==3.4.3
+#descartes==1.1.0
+git+https://github.com/benjimin/descartes.git
+shapely==2.0.2
+# trimesh==3.10.0
+trimesh==4.4.0
+scikit-image==0.20.0
+opencv-python==4.5.5.64
+scipy==1.9.1
+pyopengl==3.1.5 # might need libs
+# pyquaternion==0.9.9
+transforms3d==0.4.1
+largestinteriorrectangle==0.2.0
+pyglet==2.0.15
+tensorboard==2.12.2
+triangle==20220202
+wget==3.2
+manifold3d==2.5.1
