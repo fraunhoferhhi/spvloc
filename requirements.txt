@@ -1,8 +1,8 @@
 yacs==0.1.8
 numpy==1.23.1
-Pillow==9.5.0
+Pillow==10.3.0
 pytorch-lightning==2.0.2
-tqdm==4.65.0
+tqdm==4.66.3
 matplotlib==3.4.3
 #descartes==1.1.0
 git+https://github.com/benjimin/descartes.git
