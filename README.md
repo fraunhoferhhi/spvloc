@@ -22,7 +22,6 @@
 </div>
 
 ![visitors](https://visitor-badge.laobi.icu/badge?page_id=gard-n/SPVLoc)
-<!--![visitors](https://visitor-badge.laobi.icu/badge?page_id=gard-n/SPVLoc)-->
 </div>
 
 ![SPVLoc Overview](data/assets/overview.png)
@@ -38,7 +37,7 @@ This repository provides:
 - Code for training and testing SPVLoc on [ZinD](https://github.com/zillow/zind)  and [Structured3D](https://github.com/bertjiazheng/Structured3D) dataset.
 - Checkpoints to test SPVLoc on our compiled testsets with variable FoV network, and a checkpoint to test SPVLoc on perspective images coming with S3D.
 - Scripts to convert ZinD to the [Structured3D format](https://github.com/bertjiazheng/Structured3D/blob/master/data_organization.md) enabling its use for training 6D pose estimation methods.
-- Scripts to reproduce our test sets (Cariable FoV, variable pitch/roll offsets) for both datasets.
+- Scripts to reproduce our test sets (variable FoV, variable pitch/roll offsets) for both datasets.
 - Visualization of results.
 
 ## Updates
@@ -140,7 +139,10 @@ python ./spvloc_train_test.py -c configs/config_eval_zillow.yaml \
     SYSTEM.NUM_WORKERS 0
 ```
 
-Set `POSE_REFINE.MAX_ITERS 1` to activate pose refinement. \
+Set `TEST.PLOT_OUTPUT True` to plot overview image. \
+Set `TEST.SAVE_PLOT_OUTPUT True` to plot save overview images for all test images. \
+Set `TEST.SAVE_PLOT_DETAILS True` to plot save the parts of the overview image as separate images. \
+Set `POSE_REFINE.MAX_ITERS 1` to activate pose refinement./
 Set `SYSTEM.NUM_WORKERS` to a higher value to use CPU parallelization in the dataloader.
 
 Use `DATASET.TEST_SET_FURNITURE` argument to select different testsets, e.g. `full_90_10_10` for 90 degree field of view and plus/minus 10 degree roll pitch variation. \
@@ -153,17 +155,6 @@ Use `-c configs/config_eval_s3d.yaml`, `DATASET.PATH /path/to/s3d_testset` and `
 ### Test SPVLoc on perspective images from S3D
 
 Use `-c configs/config_eval_s3d_perspective.yaml`, `DATASET.PATH /path/to/s3d_dataset` and `-t data/pretrained_models/ckpt_s3d_16_9.ckpt` to test the model with S3D perspective images. Use `DATASET.TEST_SET_FURNITURE` to select `full` or `empty` images.
-
-### Visualize results on ZiNd or S3D
-
-The testing script can be used to generate visualizations of the results. An overview image (see below) will be plotted or saved for the test images. \
-In the top row, the 3D model is rendered with the estimated camera pose and can be compared to the model rendered with ground truth pose.
-
-Set `TEST.PLOT_OUTPUT True` to plot overviews images image by image. \
-Set `TEST.SAVE_PLOT_OUTPUT True` to plot save overview images for all test images. \
-Set `TEST.SAVE_PLOT_DETAILS True` to save the parts of the overview image as separate images.
-
-![Visualization example](data/assets/example.png)
 
 ## Training
 
