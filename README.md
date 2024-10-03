@@ -42,7 +42,7 @@ This repository provides:
 - Visualization of results.
 
 ## Updates
-
+01.10.2024: SPVLoc was presented at **ECCV 2024** with an **oral and poster presentation**. ✨ \
 22.07.2024: **Added source code.** Please don't hesitate to report compatibility problems or other issues. There might be updates in the next weeks. 🎉🎈🥳 \
 15.07.2024: Added [project page](https://fraunhoferhhi.github.io/spvloc/). \
 05.07.2024: We are happy to announce that SPVLoc has been accepted to **ECCV 2024**. The source code is undergoing last preparations and will be added here very soon.
