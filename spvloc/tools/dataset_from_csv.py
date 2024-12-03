@@ -97,9 +97,6 @@ def process_csv(path_to_csv, path_in, path_out):
             scene = sample_path.split(os.path.sep, 2)[-2]
             sample_path_scene = sample_path.replace(os.path.sep + scene, "")
             if not scene in scenes:
-                if len(scenes) > 1:
-                    continue
-
                 scenes[scene] = []
 
             scenes[scene].append(
