@@ -194,11 +194,16 @@ We would like to thank our student assistant, Roberto Perez Martinez, for his he
 If you find this code or our method useful for your academic research, please cite our paper
 
 ```bibtex
-@inproceedings{Gard2024_SPVLOC,
+@inproceedings{gard2024spcloc,
  title        = {SPVLoc: Semantic Panoramic Viewport Matching for 6D Camera Localization in Unseen Environments},
  author       = {Niklas Gard and Anna Hilsmann and Peter Eisert},
  year         = 2024,
- journal      = {arXiv preprint arXiv:2404.10527}
+ booktitle    = {Computer Vision -- {ECCV} 2024: 18th European Conference on Computer Vision, Proceedings, Part LXXIII},
+ publisher    = {Springer Nature Switzerland},
+ address      = {Cham},
+ pages        = {398--415},
+ doi          = {10.1007/978-3-031-73464-9_24},
+ url          = {https://fraunhoferhhi.github.io/spvloc/}
 }
 
 ```
