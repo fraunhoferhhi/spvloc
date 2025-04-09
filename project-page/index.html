@@ -173,7 +173,7 @@
             <h2 class="title is-3">Method</h2>
             <div class="content has-text-justified">
               <p>
-				The content of the query image is searched <i>inside</i> the semantic panorama rendering via cross-domain image-to-panorama matching. First, both inputs are encoded with CNN backbones, then the feature tensors are interwoven via depth-wise correlations and multiple tensor operations. This matching is inspired by <a href="https://openaccess.thecvf.com/content/WACV2021/html/Mercier_Deep_Template-Based_Object_Instance_Detection_WACV_2021_paper.html">DTOID</a>, a generic 2D object instance detection approach.
+				The content of the query image is searched <i>inside</i> the semantic panorama rendering via cross-domain image-to-panorama matching. First, both inputs are encoded with CNN backbones, then the feature tensors are interwoven via depth-wise correlations and multiple tensor operations. 
 				</p>
 				<p>
 				The correlated features R&#42; are fed into multiple network heads, which estimate the binary mask corresponding to the viewport of the camera in the panorama, the 2D bounding box enclosing the estimated viewport mask, and the relative 6D pose offset between the camera image and the panorama. The key point is that each match is given a score via the bounding box estimation, which can be used to select the best match from a large number of reference panoramas. The absolute pose is determined from the estimated relative pose between this panorama and the camera image.
@@ -206,7 +206,7 @@
       </div>
 
       <div class="container is-max-desktop">
-        <pre><code>@inproceedings{gard2024spcloc,
+        <pre><code>@inproceedings{gard2024spvloc,
  title        = {SPVLoc: Semantic Panoramic Viewport Matching for 6D Camera Localization in Unseen Environments},
  author       = {Niklas Gard and Anna Hilsmann and Peter Eisert},
  year         = 2024,
