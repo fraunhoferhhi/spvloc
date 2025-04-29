@@ -214,7 +214,7 @@ def convert_lines_to_vertices(lines):
 
 
 # visualize_plane
-def generate_3d_model(annotations, clip_holes=False, display_bbox=True, add_colors=False):  # , args, eps=0.9):
+def generate_3d_model(annotations, clip_holes=False, display_bbox=True, color_by_normal=False):  # , args, eps=0.9):
     junctions = [item["coordinate"] for item in annotations["junctions"]]
 
     # extract hole vertices
@@ -289,7 +289,8 @@ def generate_3d_model(annotations, clip_holes=False, display_bbox=True, add_colo
 
         face_normals = np.broadcast_to(np.array(normal), np.array(faces).shape)
         eps = 0.95
-        if add_colors:
+        if color_by_normal:
+            # Colors depend on normals.
             if np.dot(normal, [1, 0, 0]) > eps:
                 color = np.array([255, 0, 0])
             elif np.dot(normal, [-1, 0, 0]) > eps:
@@ -305,7 +306,21 @@ def generate_3d_model(annotations, clip_holes=False, display_bbox=True, add_colo
             else:
                 color = np.array([255, 255, 255])
         else:
-            color = np.array([192, 192, 192])
+            # Colors depend on semantics.
+            if semantic_type == "office":
+                if np.dot(normal, [0, 0, 1]) > eps or np.dot(normal, [0, 0, -1]) > eps:
+                    if np.all(vertices[:, 2] > 2000):
+                        color = np.array([41, 120, 142])  # floor
+                    else:
+                        color = np.array([64, 67, 135])  # floor
+                else:
+                    color = np.array([34, 167, 132])  # wall
+            elif semantic_type == "door":
+                color = np.array([121, 209, 81])
+            elif semantic_type == "window":
+                color = np.array([253, 231, 36])
+            else:
+                color = np.array([192, 192, 192])  # gray
 
         face_color = np.broadcast_to(np.array(color), np.array(faces).shape)
 

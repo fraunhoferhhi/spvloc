@@ -37,7 +37,7 @@ logging.basicConfig(stream=sys.stdout, level=logging.INFO)
 LOG = logging.getLogger(__name__)
 
 FORMATING_SCALE = 1000
-
+MAXIMUM_OPENING_WIDTH = 250
 
 class MyExtrusion(trimesh.primitives.Extrusion):
     def _create_mesh(self):
@@ -210,7 +210,8 @@ class ConvertS3D:
                 paired_openings.append(current_opening)
                 # If the closest opening is to far, this opening is considered isolated
                 # if current_opening.distance(pair_opening) > 250:
-                if line_dist(current_opening, pair_opening) > 250:
+                # print(line_dist(current_opening, pair_opening))
+                if line_dist(current_opening, pair_opening) > MAXIMUM_OPENING_WIDTH:
                     connected_room_edges.append((current_idx, current_idx))
                     continue
                 paired_openings.append(pair_opening)
@@ -1338,40 +1339,42 @@ class ConvertS3D:
 
                     # Inner level data is per-pano (for each floor)
                     for pano_id, pano_data in partial_room_data.items():
-                        # Get the integer portion of the pano name, which is "pano_{:03d}"
                         pano_id_int = int(pano_id.split("_")[-1])
-                        output_folder_room_id = os.path.join(
-                            output_folder_2d_rendering,
-                            "{:d}".format(pano_id_int),
-                        )
-                        os.makedirs(output_folder_room_id, exist_ok=True)
-                        output_folder_pano = os.path.join(output_folder_room_id, "panorama")
-                        os.makedirs(output_folder_pano, exist_ok=True)
-                        output_folder_pano_full = os.path.join(output_folder_pano, "full")
-                        os.makedirs(output_folder_pano_full, exist_ok=True)
 
-                        # get_camera_center_global
-                        (
-                            pano_image_name,
-                            pano_image,
-                            camera_center_global,
-                        ) = self._get_camera_center_global(pano_data)
-                        # Dont save the images from the panos that have a non
-                        # flat ceiling, if include_nonflat_ceiling_panos=True.
-                        #
+                        if pano_data["image_path"] != "":
+                            # Get the integer portion of the pano name, which is "pano_{:03d}"
+                            output_folder_room_id = os.path.join(
+                                output_folder_2d_rendering,
+                                "{:d}".format(pano_id_int),
+                            )
+                            os.makedirs(output_folder_room_id, exist_ok=True)
+                            output_folder_pano = os.path.join(output_folder_room_id, "panorama")
+                            os.makedirs(output_folder_pano, exist_ok=True)
+                            output_folder_pano_full = os.path.join(output_folder_pano, "full")
+                            os.makedirs(output_folder_pano_full, exist_ok=True)
 
-                        # The key is not available, we assume it is not flat
-                        is_ceiling_flat = pano_data.get("is_ceiling_flat", False)
+                            # get_camera_center_global
+                            (
+                                pano_image_name,
+                                pano_image,
+                                camera_center_global,
+                            ) = self._get_camera_center_global(pano_data)
+                            # Dont save the images from the panos that have a non
+                            # flat ceiling, if include_nonflat_ceiling_panos=True.
+                            #
 
-                        if is_ceiling_flat or self.include_nonflat_ceiling_panos:
-                            output_file_name = os.path.join(output_folder_pano_full, "rgb_rawlight.jpg")
-                            pano_image.write_to_file(output_file_name)
-                            camera_xyz_file_path = os.path.join(output_folder_pano, "camera_xyz.txt")
-                            np.savetxt(camera_xyz_file_path, camera_center_global)
+                            # The key is not available, we assume it is not flat
+                            is_ceiling_flat = pano_data.get("is_ceiling_flat", False)
 
-                            self.info_json["original_image"][pano_id] = pano_image_name
-                        else:
-                            self.info_json["original_image"] = "flat_ceiling"
+                            if is_ceiling_flat or self.include_nonflat_ceiling_panos:
+                                output_file_name = os.path.join(output_folder_pano_full, "rgb_rawlight.jpg")
+                                pano_image.write_to_file(output_file_name)
+                                camera_xyz_file_path = os.path.join(output_folder_pano, "camera_xyz.txt")
+                                np.savetxt(camera_xyz_file_path, camera_center_global)
+
+                                self.info_json["original_image"][pano_id] = pano_image_name
+                            else:
+                                self.info_json["original_image"] = "flat_ceiling"
                         # The primary and secodnary panos
                         if not pano_data["is_primary"]:
                             continue
