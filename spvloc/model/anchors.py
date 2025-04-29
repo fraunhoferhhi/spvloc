@@ -28,7 +28,11 @@ class Anchors(nn.Module):
         if scales is None:
             self.scales = np.array([2**0, 2 ** (1.0 / 3.0), 2 ** (2.0 / 3.0)])
 
-    def forward(self, image_shapes):
+    def forward(self, image_shapes, device=None):
+
+        if device is None:
+            device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
         # compute anchors over all pyramid levels
         all_anchors = np.zeros((0, 4)).astype(np.float32)
 
@@ -39,7 +43,7 @@ class Anchors(nn.Module):
 
         all_anchors = np.expand_dims(all_anchors, axis=0)
 
-        return torch.from_numpy(all_anchors.astype(np.float32)).cuda()
+        return torch.from_numpy(all_anchors.astype(np.float32)).to(device)
 
 
 def generate_anchors(base_size=16, ratios=None, scales=None):

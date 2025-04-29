@@ -519,7 +519,7 @@ class BoundingBoxDecoder(nn.Module):
     def forward(self, pano_feat, persp_feat, test=False, ignore_regression=False):
         xcors, segmentation = self.correlation_model(pano_feat, persp_feat, return_vp_mask=test)
 
-        anchors = self.anchors([[xcors.size(2), xcors.size(3)]])
+        anchors = self.anchors([[xcors.size(2), xcors.size(3)]], xcors.device)
         classifications, _ = self.classification(xcors)
         if ignore_regression:
             regression = None
