@@ -2,6 +2,7 @@ import matplotlib.cm as cm
 import matplotlib.patches as patches
 import matplotlib.pyplot as plt
 import numpy as np
+import time
 from descartes.patch import PolygonPatch
 from matplotlib.colors import LinearSegmentedColormap
 from shapely.geometry import Polygon
@@ -80,32 +81,51 @@ def plot_floorplan(
     crop_floorplan=False,
     zoom=False,
     show_only_samples=False,
+    limits=None,
+    background_image=None,
+    fill_frame=False,
+    export=False,
 ):
+    start_time = time.time()
     """plot floorplan"""
     fig = plt.figure()
-    ax = fig.add_subplot(1, 1, 1)
+
+    if fill_frame:
+        ax = fig.add_axes([0, 0, 1, 1])
+    else:
+        ax = fig.add_subplot(1, 1, 1)
+    if limits is not None:
+        (xmin, xmax, ymin, ymax) = limits
+        ax.set_xlim(xmin, xmax)
+        ax.set_ylim(ymin, ymax)
+        if background_image is not None:
+            ax.imshow(background_image, extent=[xmin, xmax, ymin, ymax], origin="upper", aspect="auto")
+
     draw_elems = ["office", "staircase", "corridor", "collumn"]
     additional_elems = ["door", "window"]  # only draw lines
     junctions = np.array([junc["coordinate"][:2] for junc in annos["junctions"]])
-    for polygon, poly_type in polygons:
-        polygon = Polygon(junctions[np.array(polygon)])
-        if poly_type in additional_elems:
-            plot_coords(
-                ax,
-                polygon.exterior,
-                alpha=1.0,
-                linewidth=3 if zoom else 2,
-                color=semantics_cmap[poly_type],
-            )
-        else:
-            plot_coords(ax, polygon.exterior, alpha=0.5, linewidth=linewidth)
-        if poly_type == "outwall":
-            patch = PolygonPatch(polygon, facecolor=semantics_cmap[poly_type], alpha=0, linewidth=linewidth)
-            ax.add_patch(patch)
-        else:
-            if poly_type in draw_elems:
-                patch = PolygonPatch(polygon, facecolor=semantics_cmap[poly_type], alpha=0.5, linewidth=0)
+
+    if background_image is None:
+        for polygon, poly_type in polygons:
+            polygon = Polygon(junctions[np.array(polygon)])
+            if poly_type in additional_elems:
+                plot_coords(
+                    ax,
+                    polygon.exterior,
+                    alpha=1.0,
+                    linewidth=3 if zoom else 2,
+                    color=semantics_cmap[poly_type],
+                )
+            else:
+                plot_coords(ax, polygon.exterior, alpha=0.5, linewidth=linewidth)
+            if poly_type == "outwall":
+                patch = PolygonPatch(polygon, facecolor=semantics_cmap[poly_type], alpha=0, linewidth=linewidth)
                 ax.add_patch(patch)
+            else:
+                if poly_type in draw_elems:
+                    patch = PolygonPatch(polygon, facecolor=semantics_cmap[poly_type], alpha=0.5, linewidth=0)
+                    ax.add_patch(patch)
+
     roi_points = []
     add_colorbar = False
     if circles is not None:
@@ -126,10 +146,10 @@ def plot_floorplan(
                 bb_2 = ((bb[2] / 256.0) - 0.5) * -360.0
 
             pt_2d = (circle[0], circle[1])
-
+            circle_patch = None
             if show_only_samples:
                 if circle_type == "sample_pose":
-                    circle_patch = plt.Circle(pt_2d, 60.0, color=BLACK)
+                    circle_patch = plt.Circle(pt_2d, 60.0, color=DARKGRAY if export else BLACK)
                     roi_points.append(pt_2d)
             else:
                 if circle_type == "init_pose":
@@ -197,7 +217,8 @@ def plot_floorplan(
                     roi_points.append(pt_2d)
                     circle_patch = plt.Circle(pt_2d, 150.0, color=RED)
 
-            ax.add_patch(circle_patch)
+            if circle_patch is not None:
+                ax.add_patch(circle_patch)
 
         if zoom:
             roi_points = np.array(roi_points)
@@ -211,18 +232,43 @@ def plot_floorplan(
             ax.set_aspect("equal", adjustable="box")
     if not zoom:
         plt.axis("equal")
+
     plt.axis("off")
     if add_colorbar:
         plt.colorbar(cm.ScalarMappable(cmap=cmap))
+
+    xmin, xmax = ax.get_xlim()
+    ymin, ymax = ax.get_ylim()
+
+    # Calculate desired aspect ratio
+    desired_aspect_ratio = fig.get_size_inches()[0] / fig.get_size_inches()[1]
+
+    # Set new limits based on the aspect ratio
+    width, height = xmax - xmin, ymax - ymin
+    center_x, center_y = (xmin + xmax) / 2, (ymin + ymax) / 2
+
+    if width / height > desired_aspect_ratio:
+        new_height = width / desired_aspect_ratio
+        ymin, ymax = center_y - new_height / 2, center_y + new_height / 2
+    else:
+        new_width = height * desired_aspect_ratio
+        xmin, xmax = center_x - new_width / 2, center_x + new_width / 2
+
+    plot_size = (xmin, xmax, ymin, ymax)
+
     fig.set_dpi(dpi)
     fig.canvas.draw()
     data = np.frombuffer(fig.canvas.tostring_rgb(), dtype=np.uint8)
     data = data.reshape(fig.canvas.get_width_height()[::-1] + (3,))
-    # plt.close(fig)
     plt.close("all")
     if crop_floorplan:
         data = crop_non_white(data)
-    return data
+    elapsed_time = time.time() - start_time
+    # print(f"Plot preparation time: {elapsed_time:.6f} seconds")
+    if export:
+        return data, plot_size
+    else:
+        return data
 
 
 def crop_non_white(image):
