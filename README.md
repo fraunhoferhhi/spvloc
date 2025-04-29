@@ -36,6 +36,7 @@ This is the code repository for the Paper: *SPVLoc: Semantic Panoramic Viewport 
 This repository provides:
 
 - Code for training and testing SPVLoc on [ZinD](https://github.com/zillow/zind)  and [Structured3D](https://github.com/bertjiazheng/Structured3D) dataset.
+- An [interactive demo](#-quick-demo) to explore global and local pose estimation with SPVLoc, without requiring a dataset download.
 - Checkpoints to test SPVLoc on our compiled testsets with variable FoV network, and a checkpoint to test SPVLoc on perspective images coming with S3D.
 - Scripts to convert ZinD to the [Structured3D format](https://github.com/bertjiazheng/Structured3D/blob/master/data_organization.md) enabling its use for training 6D pose estimation methods.
 - Scripts to reproduce our test sets (variable FoV, variable pitch/roll offsets) for both datasets.
