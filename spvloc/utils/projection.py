@@ -258,14 +258,31 @@ def lonlat2XY(lonlat, shape):
     return out
 
 
-def pano2persp_get_camera_parameter(fov, yaw, pitch, roll):
+def pano2persp_get_camera_parameter(fov, yaw, pitch, roll, correct_roll=False):
+    """
+    Calculate the camera parameters for converting panoramic images to perspective views.
+
+    Parameters:
+    - fov (float): Field of view in degrees.
+    - yaw (float): Yaw angle in degrees.
+    - pitch (float): Pitch angle in degrees.
+    - roll (float): Roll angle in degrees.
+    - correct_roll (bool): If True, fixes the unwanted dependency between the roll angle and yaw.
+                       Should be False to reproduce the exact results from the paper.
+
+    Returns:
+    - R (numpy.ndarray): Rotation matrix to use with panorama.
+    - R_f (numpy.ndarray): Rotation matrix to use with renderer.
+    - cam (numpy.ndarray): Camera matrix to use with renderer.
+    """
+
     y_axis = np.array([0.0, 1.0, 0.0], np.float32)
     x_axis = np.array([1.0, 0.0, 0.0], np.float32)
-    z_axis = np.array([0.0, 0.0, 1.0], np.float32)  # New: Define z-axis orientation
+    z_axis = np.array([0.0, 0.0, 1.0], np.float32)
     R1, _ = cv2.Rodrigues(y_axis * np.radians(yaw))
     R2, _ = cv2.Rodrigues(np.dot(R1, x_axis) * np.radians(pitch))
-    R3, _ = cv2.Rodrigues(np.dot(R2, z_axis) * np.radians(roll))  # New: Calculate rotation matrix for z-axis
-    R = R3 @ R2 @ R1  # Updated: Combine all rotation matrices
+    R3, _ = cv2.Rodrigues(np.dot(R2 @ R1 if correct_roll else R2, z_axis) * np.radians(roll))
+    R = R3 @ R2 @ R1
 
     R_f = np.copy(R)  # fixed rotation matrix to be compatible with the renderers
     R_f[1] = -R_f[1]  # negate second row
