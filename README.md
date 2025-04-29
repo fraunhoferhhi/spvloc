@@ -27,7 +27,7 @@
 
 ![SPVLoc Overview](data/assets/overview.png)
 
-Our method calculates the indoor 6D camera pose by determining the image position and orientation relative to synthetic panoramas. The best panoramic match is found through semantic viewport matching.
+Our method estimates the  **indoor 6D camera pose** by determining the image position and orientation relative to a **minimalistic, semantically annotated 3D model**. This model is represented by a set of synthetic panoramic images, from which we identify the optimal panoramic match using semantic viewport matching**. Finally, the *6D pose is estimated based on the location of the best-matching panorama.
 
 ## 📋 Overview
 
