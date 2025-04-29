@@ -29,7 +29,7 @@
 
 Our method calculates the indoor 6D camera pose by determining the image position and orientation relative to synthetic panoramas. The best panoramic match is found through semantic viewport matching.
 
-## Overview
+## 📋 Overview
 
 This is the code repository for the Paper: *SPVLoc: Semantic Panoramic Viewport Matching for 6D Camera Localization in Unseen Environments*.
 
@@ -41,13 +41,15 @@ This repository provides:
 - Scripts to reproduce our test sets (variable FoV, variable pitch/roll offsets) for both datasets.
 - Visualization of results.
 
-## Updates
+## 📢 Updates
+
+29.04.2025: Added [quick interactive demo](#-quick-demo) using a ZinD sample scene. 🚀\
 01.10.2024: SPVLoc was presented at **ECCV 2024** with an **oral and poster presentation**. ✨ \
 22.07.2024: **Added source code.** Please don't hesitate to report compatibility problems or other issues. There might be updates in the next weeks. 🎉🎈🥳 \
 15.07.2024: Added [project page](https://fraunhoferhhi.github.io/spvloc/). \
 05.07.2024: We are happy to announce that SPVLoc has been accepted to **ECCV 2024**. The source code is undergoing last preparations and will be added here very soon.
 
-## Installation
+## 🔧 Installation
 
 ### Step 1: Setup Conda environment
 
@@ -77,6 +79,26 @@ Execute the following script if you want to run the code on a Linux server witho
 
 ```bash
 python -m spvloc.tools.download_pretrained_models
+```
+
+## 🚀 Quick Demo
+
+This demo downloads a test scene from the [Zind repository](https://github.com/zillow/zind/tree/main).
+
+### 1. Prepare the Demo
+
+Run this command to download the data and model:
+
+```bash
+python -m spvloc.tools.prepare_demo
+```
+
+### 2. Run the Demo
+
+Execute the interactive visualization:
+
+```bash
+python -m spvloc.tools.visualize_matching -c configs/config_demo.yaml -t data/pretrained_models/ckpt_zind_demo_large_angle.ckpt
 ```
 
 ## Dataset Preparation (ZiND)
@@ -189,7 +211,7 @@ Add the flag `DATASET.S3D_NO_PERSP_IMAGES True`, in case that you have not downl
 This work is partially funded by the German Federal Ministry of Economic Affairs and Climate Action (BIMKIT, grant no. 01MK21001H) and the German Federal Ministry for Digital and Transport (EConoM,  grant no. 19OI22009C). \
 We would like to thank our student assistant, Roberto Perez Martinez, for his help and support during the development of the ZinD to S3D conversion scripts.
 
-## Citation
+## 📚 Citation
 
 If you find this code or our method useful for your academic research, please cite our paper
 

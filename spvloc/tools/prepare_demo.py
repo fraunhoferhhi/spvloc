@@ -6,7 +6,7 @@ import argparse
 
 from spvloc.tools.download_pretrained_models import download_file
 
-CHECKPOINT_PATH = "ckpt_zind_retrain_demo.ckpt"  # "ckpt_zind_retrain_large_angle"
+CHECKPOINT_PATH = "ckpt_zind_demo_large_angle.ckpt"
 ZIND_URL = "https://github.com/zillow/zind.git"
 ZIND_FOLDER = "sample_tour"
 
