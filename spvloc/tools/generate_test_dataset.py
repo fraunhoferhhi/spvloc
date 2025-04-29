@@ -372,7 +372,9 @@ class Dataset_Exporter(Dataset):
                             if not os.path.exists(path_out):
                                 os.makedirs(path_out)
 
-                        pano_R, render_R, cam = pano2persp_get_camera_parameter(fov, yaw, pitch, roll)
+                        pano_R, render_R, cam = pano2persp_get_camera_parameter(
+                            fov, yaw, pitch, roll, self.config.DATASET.PERSP_FROM_PANO_CORRECT_ROLL
+                        )
 
                         persp_pose = np.concatenate([render_R, pano_pose[..., np.newaxis]], axis=1)
                         persp_pose = np.concatenate([persp_pose, np.array([[0.0, 0.0, 0.0, 1.0]])], axis=0)
@@ -416,7 +418,9 @@ class Dataset_Exporter(Dataset):
                                     pitch = 0 if pitch_range == 0 else np.random.randint(-pitch_range, pitch_range)
                                     roll = 0 if roll_range == 0 else np.random.randint(-roll_range, roll_range)
 
-                                    pano_R, render_R, cam = pano2persp_get_camera_parameter(fov, yaw, pitch, roll)
+                                    pano_R, render_R, cam = pano2persp_get_camera_parameter(
+                                        fov, yaw, pitch, roll, self.config.DATASET.PERSP_FROM_PANO_CORRECT_ROLL
+                                    )
                                     persp_pose = np.concatenate([render_R, pano_pose[..., np.newaxis]], axis=1)
                                     persp_pose = np.concatenate([persp_pose, np.array([[0.0, 0.0, 0.0, 1.0]])], axis=0)
 
@@ -465,68 +469,6 @@ class Dataset_Exporter(Dataset):
                                     "z": pano_pose[2],
                                 }
                             )
-
-                # exprint(path_out)
-                # poses_and_rooms = []
-                # poses_and_rooms.append((persp_pose, room_idx))
-
-                # sampled_depth_normals = render_scene_batched(
-                #     self.config, geometry, poses_and_rooms, materials, mode="depth_normal"
-                # )
-                # sampled_normals = sampled_depth_normals[..., :3]
-                # sampled_layouts = sampled_depth_normals[..., 3:]
-
-                # sampled_semantics = render_scene_batched(
-                #     self.config, geometry_clipped, poses_and_rooms, materials_clipped, mode="semantic"
-                # )
-
-                # room_sample["id"] = 0
-                # room_sample["cam"] = cam
-                # room_sample["pose"] = persp_pose
-                # room_sample["euler"] = np.deg2rad(np.array([yaw, pitch, roll]))
-                # room_sample["path"] = room["panorama"]
-                # room_sample["rotation_pano"] = pano_R
-
-        # test_fov = sample_fov[0]
-        # # samples_per_pano = 1
-        # max_tests = 10
-
-        # pano_pose = room["pose"]
-
-        # room_idx = projects_onto_floor(pano_pose, floor)
-
-        # yaw = np.random.randint(-180, 180)
-
-        # layout_pano = render_scene(
-        #     self.config,
-        #     geometry,
-        #     pano_pose,
-        #     materials,
-        #     room_idx=room_idx,
-        #     mode="depth",
-        #     img_size_in=(16, 32),
-        # )
-
-        # distances = torch.tensor(layout_pano[7:8, :]).unsqueeze(0)
-        # distances = torch.nn.functional.interpolate(distances, (360))[0].numpy()
-        # distances = np.clip(distances, 0.1, 10.0)
-        # if distances.mean() == 10.0:
-        #     return {}
-        # else:
-        #     yaw = np.random.choice(np.where(distances > distances.mean())[1] - 180)
-        # # yaw = np.random.choice(np.where((distances > 1.2) | (distances > mean_distance))[1] - 180)
-        # yaw = np.random.choice(np.where(distances > distances.mean())[1] - 180)
-        # pano_R, render_R, cam = pano2persp_get_camera_parameter(test_fov, yaw, 0, 0)
-
-        # persp_pose = np.concatenate([render_R, pano_pose[..., np.newaxis]], axis=1)
-
-        ######
-        # room_sample["id"] = 0
-        # room_sample["cam"] = cam
-        # room_sample["pose"] = persp_pose
-        # room_sample["euler"] = np.deg2rad(np.array([yaw, pitch, roll]))
-        # room_sample["path"] = room["panorama"]
-        # room_sample["rotation_pano"] = pano_R
 
         with open(csv_file_path, "a", newline="") as csv_file:
             # print(output_data)

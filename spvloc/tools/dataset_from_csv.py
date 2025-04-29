@@ -54,7 +54,7 @@ def count_rows(path_to_csv):
     return total_rows
 
 
-def process_csv(path_to_csv, path_in, path_out):
+def process_csv(path_to_csv, path_in, path_out, correct_roll_dependency=False):
     # Load CSV file
     anno_filename = "annotation_3d.json"
     zillow_filename = "zind_data.json"
@@ -131,12 +131,14 @@ def process_csv(path_to_csv, path_in, path_out):
 
             # Add furniture component and file name
             transformed_path = os.path.join(transformed_path, furniture, "rgb_rawlight.png")
-            if not os.path.exists(transformed_path):
-                transformed_path = transformed_path.replace(".png", ".jpg")
 
             img_path = os.path.normpath(path_in) + os.path.normpath(transformed_path)
+            if not os.path.exists(img_path):
+                img_path = img_path.replace(".png", ".jpg")
 
-            pano_R, render_R, cam = pano2persp_get_camera_parameter(fov_f, yaw_f, pitch_f, roll_f)
+            pano_R, render_R, cam = pano2persp_get_camera_parameter(
+                fov_f, yaw_f, pitch_f, roll_f, correct_roll_dependency
+            )
             persp_pose = np.concatenate([render_R, pano_pose[..., np.newaxis]], axis=1)
             persp_pose = np.concatenate([persp_pose, np.array([[0.0, 0.0, 0.0, 1.0]])], axis=0)
 
@@ -204,6 +206,10 @@ def parse_arguments():
     parser.add_argument("-d", "--path_to_csv", type=str, help="Path to the CSV file")
     parser.add_argument("-i", "--path_in", type=str, help="Input path")
     parser.add_argument("-o", "--path_out", type=str, help="Output path")
+
+    # Set to True to fix the dependency between yaw and roll angle, ensuring the rotation matrix correctly reflects the given angles.
+    # Set to False to reproduce the exact images as used in the paper.
+    parser.add_argument("-c", "--correct_roll", action="store_true", help="Fix roll angle dependency.")
     return parser.parse_args()
 
 
@@ -212,10 +218,11 @@ def main():
     path_to_csv = args.path_to_csv
     path_in = args.path_in
     path_out = args.path_out
+
     print("Input Path:", path_in)
     print("Output Path:", path_out)
     print("CSV Path:", path_to_csv)
-    process_csv(path_to_csv, path_in, path_out)
+    process_csv(path_to_csv, path_in, path_out, args.correct_roll)
 
 
 if __name__ == "__main__":

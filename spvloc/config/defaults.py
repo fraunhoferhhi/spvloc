@@ -29,6 +29,9 @@ _C.DATASET.AUGMENT_QUERYS = True  # Apply some simple color and blur augmentatio
 _C.DATASET.PERSP_FROM_PANO = False  # Sample perspective train images from panoramas
 _C.DATASET.PERSP_FROM_PANO_FOV = 80.0  # Field of view during training, ignored if LEARN_FOV = True
 _C.DATASET.PERSP_FROM_PANO_RANGE = [180, 10, 10]  # Sample ranges (plusminus) for pranorama sampling
+# Ensures roll angle is independent of yaw when sampling perspective views from panorama during training.
+# Set to False to reproduce exact results from the paper.
+_C.DATASET.PERSP_FROM_PANO_CORRECT_ROLL = True
 _C.DATASET.FILTER_EMPTY_IMAGES = True  # Fiter perspective images containing only one semantic class
 # Rather look inside the room than just in a random direction during training
 _C.DATASET.PERSP_FROM_PANO_FILTER_VALID_YAW = True

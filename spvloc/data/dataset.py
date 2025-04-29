@@ -39,6 +39,7 @@ def load_scene_data(
     for_visualisation=False,
     load_perspective=True,
     config=None,
+    filter_invalid=False,
 ):
     scenes = []
     scene_precompute_path = os.path.join(root_path, precompute_path)
@@ -212,9 +213,10 @@ def load_scene_data(
         scene["floor_planes"] = Meshes(scene["floor_planes"]["verts"], scene["floor_planes"]["faces"])
         # TODO: Add flag
         # Post ECCV fix: Filter rooms without valid gt (2024.06.13: this can only be used in certain cases)
-        # scene["rooms"] = [
-        #     room for room in scene["rooms"] if projects_onto_floor(room["pose"], scene["floor_planes"]) != -1
-        # ]
+        if filter_invalid:
+            scene["rooms"] = [
+                room for room in scene["rooms"] if projects_onto_floor(room["pose"], scene["floor_planes"]) != -1
+            ]
 
     return scenes
 
@@ -381,7 +383,9 @@ class Structured3DPlans_Perspective(Dataset):
                     valid_yaw = np.where(distances > distances.mean())[1]
                     yaw = 0 if len(valid_yaw) == 0 else np.random.choice(valid_yaw - 180)
 
-                pano_R, render_R, cam = pano2persp_get_camera_parameter(fov, yaw, pitch, roll)
+                pano_R, render_R, cam = pano2persp_get_camera_parameter(
+                    fov, yaw, pitch, roll, self.config.DATASET.PERSP_FROM_PANO_CORRECT_ROLL
+                )
 
                 persp_pose = np.concatenate([render_R, pano_pose[..., np.newaxis]], axis=1)
 
