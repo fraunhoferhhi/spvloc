@@ -436,6 +436,8 @@ class PerspectiveImageFromLayout(pl.LightningModule):
         max_size,
         return_xcors_only=False,
         return_bbs=False,
+        cache_pano_map=False,
+        encoded_pano_input=False,
     ):
         num_chunks = int(features_selected.shape[0] / max_size + 1.0)
 
@@ -448,9 +450,13 @@ class PerspectiveImageFromLayout(pl.LightningModule):
         pano_encode_time_start = time.time()
         bs_img = int(features_selected.shape[0] / pano_map.shape[0])
 
-        pano_map = torch.cat(
-            [self.panorama_embedder.forward(chunk) for chunk in pano_map.chunk(num_chunks, dim=0)], dim=0
-        )
+        if not encoded_pano_input:
+            pano_map = torch.cat(
+                [self.panorama_embedder.forward(chunk) for chunk in pano_map.chunk(num_chunks, dim=0)], dim=0
+            )
+
+        cached_pano_map = pano_map if cache_pano_map else None
+
         # pano_map = self.panorama_embedder.forward(pano_map)
 
         # TODO: Idea to save memory, do not flatten this since the memory is not contigous,
@@ -499,9 +505,11 @@ class PerspectiveImageFromLayout(pl.LightningModule):
 
         correlation_time = time.time() - correlation_time_start
 
-        return results_score, xcors, results_bbs, results_masks, (pano_encode_time, correlation_time)
+        return results_score, xcors, results_bbs, results_masks, cached_pano_map, (pano_encode_time, correlation_time)
 
-    def test_step_full_epoch(self, batch, refine_iterations=1, top_n=3, top_idx=0, prepare_plot=False, scene=None):
+    def test_step_full_epoch(
+        self, batch, refine_iterations=1, top_n=3, top_idx=0, prepare_plot=False, scene=None, cache_features=False
+    ):
         start_time = time.time()
         pano_normals = batch["sampled_normals"].to(self.device)
         pano_semantics = batch["sampled_semantics"].to(self.device)
@@ -516,10 +524,24 @@ class PerspectiveImageFromLayout(pl.LightningModule):
 
         max_split_size = 100  # 246
 
-        pano_map = self.prepare_pano_map(pano_normals, pano_semantics, pano_depth)
+        bs = pano_semantics.shape[0]
+        bs_img = query_image.shape[0]
+
+        if top_n == -1:
+            # Estimate a pose for each panorama reference.
+            top_n = bs
 
         query_time_start = time.time()
-        query_embed, features = self.query_embedder(query_image)
+
+        if "cached_image_feat" in batch:
+            # print("Skip Image encoding")
+            query_embed = batch["cached_image_feat"][0]
+            features_selected = batch["cached_image_feat"][1]
+        else:
+            query_embed, features = self.query_embedder(query_image)
+            features_selected = features.unsqueeze(0).repeat([bs, 1, 1, 1, 1])
+            features_selected = torch.flatten(features_selected, end_dim=1)
+
         query_time = time.time() - query_time_start
 
         if prepare_plot:
@@ -528,23 +550,25 @@ class PerspectiveImageFromLayout(pl.LightningModule):
             query_semantics_decoded = query_decoded[:, 3:]
             query_layout_decoded = query_layout_decoded / torch.norm(query_layout_decoded, dim=1, keepdim=True)
 
-        bs = pano_semantics.shape[0]
+        if "cached_pano_feat" in batch:
+            pano_map = batch["cached_pano_feat"]
+            encoded_pano_input = True
+        else:
+            pano_map = self.prepare_pano_map(pano_normals, pano_semantics, pano_depth)
+            encoded_pano_input = False
 
-        bs_img = query_image.shape[0]
+        pano_features = None
 
-        if top_n == -1:
-            # Estimate a pose for each panorama reference.
-            top_n = bs
-
-        features_selected = features.unsqueeze(0).repeat([bs, 1, 1, 1, 1])
-        features_selected = torch.flatten(features_selected, end_dim=1)
-
-        max_score, xcors, bbs_est, vp_masks_est, (pano_encode_time, correlation_time) = self.split_chunks(
-            pano_map,
-            features_selected,
-            max_split_size,
-            False,
-            return_bbs=prepare_plot,
+        max_score, xcors, bbs_est, vp_masks_est, pano_features, (pano_encode_time, correlation_time) = (
+            self.split_chunks(
+                pano_map,
+                features_selected,
+                max_split_size,
+                False,
+                return_bbs=prepare_plot,
+                cache_pano_map=cache_features,
+                encoded_pano_input=encoded_pano_input,
+            )
         )
 
         def extend_tensor(x_in):
@@ -649,7 +673,7 @@ class PerspectiveImageFromLayout(pl.LightningModule):
                 estimated_normals, estimated_semantics, estimated_depth, dim=-3
             ).to(self.device)
 
-            max_score_refine, xcors_refine, _, _, _ = self.split_chunks(
+            max_score_refine, xcors_refine, _, _, _, _ = self.split_chunks(
                 pano_map_refine, features, max_split_size, False
             )
 
@@ -720,6 +744,10 @@ class PerspectiveImageFromLayout(pl.LightningModule):
 
         output["retrieved_positions"] = retrieved_positions.cpu().detach()
         output["timing"] = timing_dict
+
+        if cache_features:
+            output["cached_pano_feat"] = pano_features
+            output["cached_image_feat"] = (query_embed, features_selected)
 
         if refine:
             output["xyz_out_refine"] = xyz_out_refine.cpu().detach()
