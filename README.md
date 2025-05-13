@@ -85,6 +85,14 @@ python -m spvloc.tools.download_pretrained_models
 ## 🚀 Quick Demo
 
 This demo downloads a test scene from the [Zind repository](https://github.com/zillow/zind/tree/main).
+It enables evaluation of localization performance using an interactive GUI.
+
+- To test global localization, ensure the **sample local** option is deselected.  
+- Adjust the **roll**, **pitch**, **yaw**, and **FoV** sliders to modify the perspective image used for localization.  
+- The **reference panorama** panel displays the best matching panorama along with the estimated viewport.  
+- Slider adjustments provide immediate visual feedback on the localization outcome.  
+- To test relative localization against a single panorama, select the **sample local** option.  
+- When relative localization is tested, the relative offset of the reference panorama with respect to the query image can be changed with the **panorama offset** sliders.
 
 ### 1. Prepare the Demo
 
@@ -101,6 +109,8 @@ Execute the interactive visualization:
 ```bash
 python -m spvloc.tools.visualize_matching -c configs/config_demo.yaml -t data/pretrained_models/ckpt_zind_demo_large_angle.ckpt
 ```
+
+<img src="data/assets/gui.gif" alt="Demo" style="width: 70%;">
 
 ## Dataset Preparation (ZiND)
 
