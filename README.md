@@ -141,6 +141,8 @@ python -m spvloc.tools.dataset_from_csv \
     -o /path/to/zind_testset
 ```
 
+**Remark:** Add `-c` flag to generate data with rotation matrix reflecting roll and pitch angles from the CSV file. The original setting caused an unwanted dependency between the angles, leading to underrepresentation of some combinations, though performance remains comparable.
+
 ## Dataset Preparation (S3D)
 
 ### Step 1: Download the S3D dataset
@@ -157,6 +159,8 @@ python -m spvloc.tools.dataset_from_csv \
     -i /path/to/s3d_dataset \
     -o /path/to/s3d_testset
 ```
+
+**Remark:** Add `-c` flag to generate data with rotation matrix reflecting roll and pitch angles from the CSV file. The original setting caused an unwanted dependency between the angles, leading to underrepresentation of some combinations, though performance remains comparable.
 
 ## Testing
 
@@ -178,6 +182,8 @@ Set `SYSTEM.NUM_WORKERS` to a higher value to use CPU parallelization in the dat
 
 Use `DATASET.TEST_SET_FURNITURE` argument to select different testsets, e.g. `full_90_10_10` for 90 degree field of view and plus/minus 10 degree roll pitch variation. \
 The checkpoint is trained to handle angle variation in a range of plus/minus 10 degree. We will make a model trained with larger angle variation available soon.
+
+**Remark:** Add `DATASET.PERSP_FROM_PANO_CORRECT_ROLL True` if you trained a new model and generated test data with the `-c` flag.
 
 ### Test SPVLoc on S3D
 
@@ -210,12 +216,14 @@ python ./spvloc_train_test.py -c configs/config_zillow.yaml \
 ```
 
 Set `SYSTEM.BATCH_SIZE` as high as possible with your GPU. We used `TRAIN.BATCH_SIZE 40` with an NVIDIA A100 GPU with 40GB. \
-Set `SYSTEM.NUM_WORKERS` to the highest possible value to maximize the benefits of CPU parallelization in the dataloader.
+Set `SYSTEM.NUM_WORKERS` to the highest possible value to maximize the benefits of CPU parallelization in the dataloader. \
 
 ### Train SPVLoc on S3D
 
 Use `-c configs/config_s3d.yaml` and `/path/to/s3d_dataset` to train a model with S3D.\
-Add the flag `DATASET.S3D_NO_PERSP_IMAGES True`, in case that you have not downlaoded the full S3D dataset, including all perspective images.
+Add the flag `DATASET.S3D_NO_PERSP_IMAGES True`, in case that you have not downlaoded the full S3D dataset, including all perspective images.\
+
+**Remark:** Add `DATASET.PERSP_FROM_PANO_CORRECT_ROLL False` to replicate the ECCV training (*not recommended due to roll-pitch angle dependency*).
 
 ## Acknowledgements
 
