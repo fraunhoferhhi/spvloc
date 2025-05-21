@@ -216,12 +216,12 @@ python ./spvloc_train_test.py -c configs/config_zillow.yaml \
 ```
 
 Set `SYSTEM.BATCH_SIZE` as high as possible with your GPU. We used `TRAIN.BATCH_SIZE 40` with an NVIDIA A100 GPU with 40GB. \
-Set `SYSTEM.NUM_WORKERS` to the highest possible value to maximize the benefits of CPU parallelization in the dataloader. \
+Set `SYSTEM.NUM_WORKERS` to the highest possible value to maximize the benefits of CPU parallelization in the dataloader.
 
 ### Train SPVLoc on S3D
 
 Use `-c configs/config_s3d.yaml` and `/path/to/s3d_dataset` to train a model with S3D.\
-Add the flag `DATASET.S3D_NO_PERSP_IMAGES True`, in case that you have not downlaoded the full S3D dataset, including all perspective images.\
+Add the flag `DATASET.S3D_NO_PERSP_IMAGES True`, in case that you have not downlaoded the full S3D dataset, including all perspective images.
 
 **Remark:** Add `DATASET.PERSP_FROM_PANO_CORRECT_ROLL False` to replicate the ECCV training (*not recommended due to roll-pitch angle dependency*).
 
