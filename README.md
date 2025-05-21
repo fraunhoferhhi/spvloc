@@ -63,6 +63,7 @@ conda activate spvloc
 
 ### Step 2: Install additional dependencies
 
+On Windows, run the following commands in "Git Bash". Compilation of render requires [Visual Studio 2019 C++ build tools](https://my.visualstudio.com/Downloads?q=visual%20studio%202019&wt.mc_id=o~msft~vscom~older-downloads) to be installed (MSVC v142).
 ```bash
 # Build and install redner
 ./data/setup/install_redner.sh
