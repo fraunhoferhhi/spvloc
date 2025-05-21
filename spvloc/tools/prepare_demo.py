@@ -6,12 +6,13 @@ import argparse
 
 from spvloc.tools.download_pretrained_models import download_file
 
-CHECKPOINT_PATH = "ckpt_zind_demo_large_angle.ckpt"
+CHECKPOINT_NAME = "ckpt_zind_demo_large_angle.ckpt"
 ZIND_URL = "https://github.com/zillow/zind.git"
 ZIND_FOLDER = "sample_tour"
 
-CHECKPOINT_URL = os.path.join("https://cvg.hhi.fraunhofer.de/SPVLoc/", CHECKPOINT_PATH)
-DOWNLOAD_PATH = os.path.join("data/pretrained_models", CHECKPOINT_PATH)
+CHECKPOINT_URL = os.path.join("https://cvg.hhi.fraunhofer.de/SPVLoc/", CHECKPOINT_NAME)
+DOWNLOAD_PATH = "data/pretrained_models"
+CHECKPOINT_PATH = os.path.join(DOWNLOAD_PATH, CHECKPOINT_NAME)
 
 
 def prepare_dataset(clone_dir="external/zind", output_dir="external/zind_sample_tour"):
@@ -84,6 +85,10 @@ if __name__ == "__main__":
     )
     args = parser.parse_args()
 
-    prepare_dataset()
+    prepare_dataset()        
+    
     if not os.path.exists(DOWNLOAD_PATH):
-        download_file(CHECKPOINT_URL, DOWNLOAD_PATH, args.verify)
+        os.makedirs(DOWNLOAD_PATH)
+        
+    if not os.path.exists(CHECKPOINT_PATH):       
+        download_file(CHECKPOINT_URL, CHECKPOINT_PATH, args.verify)
