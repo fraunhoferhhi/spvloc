@@ -32,14 +32,14 @@ from PIL import Image
 from tqdm import tqdm
 
 
-def load_test_checkpoint(checkpoint_path, model):
+def load_test_checkpoint(checkpoint_path, model, device):
     if not checkpoint_path.endswith(".ckpt"):  # If it's a directory
         # Use the code to find and load the newest checkpoint within the directory
         checkpoint_files = glob.glob(os.path.join(checkpoint_path, "*.ckpt"))
         sorted_checkpoints = sorted(checkpoint_files)
         checkpoint_path = sorted_checkpoints[-1]
     print("Load test checkpoint ", checkpoint_path)
-    load = torch.load(checkpoint_path)
+    load = torch.load(checkpoint_path, map_location=device)
     # Change strict to false if something has changed about the model.
     model.load_state_dict(load["state_dict"], strict=True)
     model.eval()
@@ -220,7 +220,7 @@ class GUI(object):
         self.model = PerspectiveImageFromLayout(config).to(device)
 
         if args.test_ckpt:
-            load_test_checkpoint(args.test_ckpt, self.model)
+            load_test_checkpoint(args.test_ckpt, self.model, device)
         else:
             exit()
 
