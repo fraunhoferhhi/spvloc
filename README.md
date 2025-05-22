@@ -54,7 +54,7 @@ This repository provides:
 
 ### Step 1: Setup Conda environment
 
-**Remark**: On Windows, Visual Studio C++ Build Tools (<https://visualstudio.microsoft.com/downloads/?q=build+tools>) must be installed, as one library is built from scratch during environment setup.
+**Remark**: On Windows, [Visual Studio C++ Build Tools](<https://visualstudio.microsoft.com/downloads/?q=build+tools>) must be installed, as one library is built from scratch during environment setup.
 
 ```bash
 # Create conda environment from environment.yaml file
