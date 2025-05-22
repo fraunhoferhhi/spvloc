@@ -83,7 +83,6 @@ conda activate spvloc
 > ```
 
 </details>
-<br>
 
 ### Step 2: Download the pretrained models
 
