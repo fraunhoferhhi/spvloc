@@ -54,6 +54,8 @@ This repository provides:
 
 ### Step 1: Setup Conda environment
 
+**Remark**: On Windows, Visual Studio C++ Build Tools (https://visualstudio.microsoft.com/downloads/?q=build+tools) must be installed, as one library is built from scratch during environment setup.
+
 ```bash
 # Create conda environment from environment.yaml file
 conda env create -f environment.yaml
@@ -61,22 +63,25 @@ conda env create -f environment.yaml
 conda activate spvloc
 ```
 
-### Step 2: Install additional dependencies
-
-On Windows, run the following commands in "Git Bash". Compilation of render requires [Visual Studio 2019 C++ build tools](https://my.visualstudio.com/Downloads?q=visual%20studio%202019&wt.mc_id=o~msft~vscom~older-downloads) to be installed (MSVC v142).
-
-```bash
-# Build and install redner
-./data/setup/install_redner.sh
-```
-
-Execute the following script if you want to run the code on a Linux server without a monitor.
+**Optional**: Execute the following script if you want to run the code on a Linux server without a monitor.
 
 ```bash
 ./data/setup/prepare_mesa.sh
 ```
 
-### Step 3: Download the pretrained models
+<details>
+<summary>Open if you encounter problems during environment setup.</summary>
+Use this script if there are problems compiling *redner* during environment setup.
+
+On Windows, run the following commands in "Git Bash" and make sure that Visual Studio C++ Build Tools are installed.
+
+```bash
+# Build and install redner
+./data/setup/install_redner.sh
+```
+</details>
+
+### Step 2: Download the pretrained models
 
 ```bash
 python -m spvloc.tools.download_pretrained_models
@@ -87,6 +92,15 @@ python -m spvloc.tools.download_pretrained_models
 This demo downloads a test scene from the [Zind repository](https://github.com/zillow/zind/tree/main).
 It enables evaluation of localization performance using an interactive GUI.
 
+## Run the Demo
+```bash
+# Initial setup: download the data and model
+python -m spvloc.tools.prepare_demo 
+# Execute the interactive visualization
+python -m spvloc.tools.visualize_matching -c configs/config_demo.yaml -t data/pretrained_models/ckpt_zind_demo_large_angle.ckpt
+```
+
+## Remarks:
 - To test global localization, ensure the **sample local** option is deselected.  
 - Adjust the **roll**, **pitch**, **yaw**, and **FoV** sliders to modify the perspective image used for localization.  
 - The **reference panorama** panel displays the best matching panorama along with the estimated viewport.  
@@ -94,21 +108,6 @@ It enables evaluation of localization performance using an interactive GUI.
 - To test relative localization against a single panorama, select the **sample local** option.  
 - When relative localization is tested, the relative offset of the reference panorama with respect to the query image can be changed with the **panorama offset** sliders.
 
-### 1. Prepare the Demo
-
-Run this command to download the data and model:
-
-```bash
-python -m spvloc.tools.prepare_demo
-```
-
-### 2. Run the Demo
-
-Execute the interactive visualization:
-
-```bash
-python -m spvloc.tools.visualize_matching -c configs/config_demo.yaml -t data/pretrained_models/ckpt_zind_demo_large_angle.ckpt
-```
 
 <img src="data/assets/gui.gif" alt="Demo" style="width: 70%;">
 
