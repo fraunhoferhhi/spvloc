@@ -54,7 +54,7 @@ This repository provides:
 
 ### Step 1: Setup Conda environment
 
-**Remark**: On Windows, Visual Studio C++ Build Tools (https://visualstudio.microsoft.com/downloads/?q=build+tools) must be installed, as one library is built from scratch during environment setup.
+**Remark**: On Windows, Visual Studio C++ Build Tools (<https://visualstudio.microsoft.com/downloads/?q=build+tools>) must be installed, as one library is built from scratch during environment setup.
 
 ```bash
 # Create conda environment from environment.yaml file
@@ -63,23 +63,27 @@ conda env create -f environment.yaml
 conda activate spvloc
 ```
 
-**Optional**: Execute the following script if you want to run the code on a Linux server without a monitor.
-
-```bash
-./data/setup/prepare_mesa.sh
-```
-
 <details>
 <summary>Open if you encounter problems during environment setup.</summary>
-Use this script if there are problems compiling *redner* during environment setup.
 
-On Windows, run the following commands in "Git Bash" and make sure that Visual Studio C++ Build Tools are installed.
+> Use this script if there are problems compiling *redner* during environment setup.  
+> On Windows, run the following commands in **Git Bash** and ensure that Visual Studio C++ Build Tools are installed.
+>
+> First, comment out the last line in `requirements.txt`, then recreate and activate the Conda environment.  
+> After that, run the following script:
+>
+> ```bash
+> # Build and install redner
+> ./data/setup/install_redner.sh
+> ```
+
+</details>
+<br>
 
 ```bash
-# Build and install redner
-./data/setup/install_redner.sh
+# Optional: Execute the following script if you want to run the code on a Linux server without a monitor.
+./data/setup/prepare_mesa.sh
 ```
-</details>
 
 ### Step 2: Download the pretrained models
 
@@ -92,15 +96,6 @@ python -m spvloc.tools.download_pretrained_models
 This demo downloads a test scene from the [Zind repository](https://github.com/zillow/zind/tree/main).
 It enables evaluation of localization performance using an interactive GUI.
 
-## Run the Demo
-```bash
-# Initial setup: download the data and model
-python -m spvloc.tools.prepare_demo 
-# Execute the interactive visualization
-python -m spvloc.tools.visualize_matching -c configs/config_demo.yaml -t data/pretrained_models/ckpt_zind_demo_large_angle.ckpt
-```
-
-## Remarks:
 - To test global localization, ensure the **sample local** option is deselected.  
 - Adjust the **roll**, **pitch**, **yaw**, and **FoV** sliders to modify the perspective image used for localization.  
 - The **reference panorama** panel displays the best matching panorama along with the estimated viewport.  
@@ -108,6 +103,12 @@ python -m spvloc.tools.visualize_matching -c configs/config_demo.yaml -t data/pr
 - To test relative localization against a single panorama, select the **sample local** option.  
 - When relative localization is tested, the relative offset of the reference panorama with respect to the query image can be changed with the **panorama offset** sliders.
 
+```bash
+# Initial setup: download the data and model
+python -m spvloc.tools.prepare_demo 
+# Execute the interactive visualization
+python -m spvloc.tools.visualize_matching -c configs/config_demo.yaml -t data/pretrained_models/ckpt_zind_demo_large_angle.ckpt
+```
 
 <img src="data/assets/gui.gif" alt="Demo" style="width: 70%;">
 
