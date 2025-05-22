@@ -23,3 +23,4 @@ wget==3.2
 manifold3d==2.5.1
 glfw==2.7.0
 imgui==2.0.0
+git+https://github.com/gard-n/pyrender.git # Install patched version of pyrender
