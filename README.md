@@ -63,6 +63,11 @@ conda env create -f environment.yaml
 conda activate spvloc
 ```
 
+```bash
+# Optional: Execute the following script if you want to run the code on a Linux server without a monitor.
+./data/setup/prepare_mesa.sh
+```
+
 <details>
 <summary>Open if you encounter problems during environment setup.</summary>
 
@@ -79,11 +84,6 @@ conda activate spvloc
 
 </details>
 <br>
-
-```bash
-# Optional: Execute the following script if you want to run the code on a Linux server without a monitor.
-./data/setup/prepare_mesa.sh
-```
 
 ### Step 2: Download the pretrained models
 
