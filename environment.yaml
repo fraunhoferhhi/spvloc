@@ -9,6 +9,7 @@ dependencies:
   - torchvision=0.15.0
   - pytorch-cuda=11.8
   - pybind11=2.12.0
+  - tbb=2020.2
   - cmake
   - freetype-py
   - pip
