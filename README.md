@@ -112,7 +112,7 @@ python -m spvloc.tools.prepare_demo
 python -m spvloc.tools.visualize_matching -c configs/config_demo.yaml -t data/pretrained_models/ckpt_zind_demo_large_angle.ckpt
 ```
 
-<img src="data/assets/gui.gif" alt="Demo" style="width: 85%;">
+<img src="data/assets/gui.gif" alt="Demo" style="width: 100%;">
 
 ## Dataset Preparation (ZiND)
 
