@@ -57,13 +57,12 @@ This repository provides:
 **Remark**: On Windows, [Visual Studio C++ Build Tools](<https://visualstudio.microsoft.com/downloads/?q=build+tools>) must be installed, as one library is built from scratch during environment setup.
 
 ```bash
-# Create conda environment from environment.yaml file
-conda env create -f environment.yaml 
-# Only needed on Linux systems:
-conda install -c conda-forge libstdcxx-ng
-
-# Activate the environment
+# Create a conda environment from the environment.yaml file
+conda env create -f environment.yaml
 conda activate spvloc
+
+# On Linux systems, the following package may be required:
+conda install -c conda-forge libstdcxx-ng
 ```
 
 ```bash
