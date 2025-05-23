@@ -58,7 +58,10 @@ This repository provides:
 
 ```bash
 # Create conda environment from environment.yaml file
-conda env create -f environment.yaml
+conda env create -f environment.yaml 
+# Only needed on Linux systems:
+conda install -c conda-forge libstdcxx-ng
+
 # Activate the environment
 conda activate spvloc
 ```
