@@ -44,11 +44,8 @@ This repository provides:
 
 ## 📢 Updates
 
----
+### **23.05.2025:** **Added [quick interactive demo](#🚀-quick-demo) using a ZinD sample scene.** 🚀
 
-**23.05.2025:** **Added quick interactive demo using a ZinD sample scene.** 🚀
-
----
 01.10.2024: SPVLoc was presented at **ECCV 2024** with an **oral and poster presentation**. ✨ \
 22.07.2024: **Added source code.** Please don't hesitate to report compatibility problems or other issues. There might be updates in the next weeks. 🎉🎈🥳 \
 15.07.2024: Added [project page](https://fraunhoferhhi.github.io/spvloc/). \
