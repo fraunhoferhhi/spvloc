@@ -22,7 +22,7 @@
 </div>
 
 ![visitors](https://visitor-badge.laobi.icu/badge?page_id=gard-n/SPVLoc)	
-[![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/spvloc-semantic-panoramic-viewport-matching/indoor-localization-6-dof-pose-on-2)](https://paperswithcode.com/sota/indoor-localization-6-dof-pose-on-2?p=spvloc-semantic-panoramic-viewport-matching)
+<!--[![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/spvloc-semantic-panoramic-viewport-matching/indoor-localization-6-dof-pose-on-2)](https://paperswithcode.com/sota/indoor-localization-6-dof-pose-on-2?p=spvloc-semantic-panoramic-viewport-matching)-->
 <!--![visitors](https://visitor-badge.laobi.icu/badge?page_id=gard-n/SPVLoc)-->
 </div>
 
