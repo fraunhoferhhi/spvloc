@@ -15,7 +15,7 @@
     Fraunhofer Heinrich Hertz Institute, HHI<sup>1</sup>, Humboldt University of Berlin<sup>2</sup>
 </div>
 
-## [Project Page](https://fraunhoferhhi.github.io/spvloc/) &nbsp;|&nbsp; [Paper](https://arxiv.org/abs/2404.10527) &nbsp;|&nbsp; [Demo](#-quick-demo)
+## [Project Page](https://fraunhoferhhi.github.io/spvloc/) &nbsp;|&nbsp; [Paper](https://arxiv.org/abs/2404.10527) &nbsp;|&nbsp; [Demo](#-quick-demo) &nbsp;|&nbsp; [Video](https://eccv.ecva.net/virtual/2024/oral/516)
 
 <div>
 
