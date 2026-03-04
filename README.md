@@ -15,7 +15,7 @@
     Fraunhofer Heinrich Hertz Institute, HHI<sup>1</sup>, Humboldt University of Berlin<sup>2</sup>
 </div>
 
-## [Project Page](https://fraunhoferhhi.github.io/spvloc/) &nbsp;|&nbsp; [Paper](https://arxiv.org/abs/2404.10527) &nbsp;|&nbsp; [Demo](#-quick-demo) &nbsp;|&nbsp; [Video](https://eccv.ecva.net/virtual/2024/oral/516)
+## [Project Page](https://fraunhoferhhi.github.io/spvloc/) **(Updated 🚀)** &nbsp;|&nbsp;  [Paper](https://arxiv.org/abs/2404.10527) &nbsp;|&nbsp; [Demo](#-quick-demo) &nbsp;|&nbsp; [Video](https://eccv.ecva.net/virtual/2024/oral/516)
 
 <div>
 
@@ -46,12 +46,12 @@ This repository provides:
 
 ## 📢 Updates
 
-### **23.05.2025:** **Added [quick interactive demo](#-quick-demo) using a ZinD sample scene.** 🚀
+**04.03.2026:** **Updated [SotA comparison on project page](https://fraunhoferhhi.github.io/spvloc/#results-table).** 🏆\
+**23.05.2025:** **Added [quick interactive demo](#-quick-demo) using a ZinD sample scene.** 🚀
 
 01.10.2024: SPVLoc was presented at **ECCV 2024** with an **oral and poster presentation**. ✨ \
 22.07.2024: **Added source code.** Please don't hesitate to report compatibility problems or other issues. There might be updates in the next weeks. 🎉🎈🥳 \
-15.07.2024: Added [project page](https://fraunhoferhhi.github.io/spvloc/). \
-05.07.2024: We are happy to announce that SPVLoc has been accepted to **ECCV 2024**. The source code is undergoing last preparations and will be added here very soon.
+05.07.2024: We are happy to announce that SPVLoc has been accepted to **ECCV 2024**.
 
 ## 🔧 Installation
 
