@@ -149,6 +149,7 @@
 			<div class="column">
 			  <h2 class="title is-3 has-text-centered">News</h2>
 			<div class="box">
+			  <!-- First news -->
 			  <article class="media">
 				<figure class="media-left">
 				  <span class="icon is-medium has-text-info">
@@ -158,14 +159,29 @@
 				<div class="media-content">
 				  <div class="content">
 					<p>
-					  <strong>23.05.2025</strong><br>
-					  We added a new interactive demo to our Git repository. 
-					<a href="https://github.com/fraunhoferhhi/spvloc#-quick-demo" class="has-text-link has-text-weight-semibold" target="_blank">Feel free to check it out.</a>
+					<strong>04.03.2026:</strong> Updated <a href="#results-table" class="has-text-link has-text-weight-semibold">SotA comparison.</a>
+					</p>
+				  </div>
+				</div>
+			  </article>
+
+			  <!-- Second news -->
+			  <article class="media">
+				<figure class="media-left">
+				  <span class="icon is-medium has-text-info">
+					<i class="fas fa-bullhorn fa-lg"></i>
+				  </span>
+				</figure>
+				<div class="media-content">
+				  <div class="content">
+					<p>
+					  <strong>23.05.2025: </strong>A new <a href="https://github.com/fraunhoferhhi/spvloc#-quick-demo" class="has-text-link has-text-weight-semibold" target="_blank">interactive demo</a> is available in our Git repository. 
 					</p>
 				  </div>
 				</div>
 			  </article>
 			</div>
+			
 			</div>
 		  </div>
 		</div>
@@ -178,7 +194,7 @@
             <h2 class="title is-3">Abstract</h2>
             <div class="content has-text-justified">
               <p>
-				In this paper, we present SPVLoc, a global indoor localization method that accurately determines the six-dimensional (6D) camera pose of a query image and requires minimal scene-specific prior knowledge and no scene-specific training. Our approach employs a novel matching procedure to localize the perspective camera's viewport, given as an RGB image, within a set of panoramic semantic layout representations of the indoor environment. The panoramas are rendered from an untextured 3D reference model, which only comprises approximate structural information about room shapes, along with door and window annotations. We demonstrate that a straightforward convolutional network structure can successfully achieve image-to-panorama and ultimately image-to-model matching. Through a viewport classification score, we rank reference panoramas and select the best match for the query image. Then, a 6D relative pose is estimated between the chosen panorama and query image. Our experiments demonstrate that this approach not only efficiently bridges the domain gap but also generalizes well to previously unseen scenes that are not part of the training data. Moreover, it achieves superior localization accuracy compared to the state of the art methods and also estimates more degrees of freedom of the camera pose.
+				In this paper, we present SPVLoc, a global indoor localization method that accurately determines the <b>six-dimensional (6D) camera pose</b> of a query image and requires minimal scene-specific prior knowledge and no scene-specific training. Our approach employs a novel matching procedure to localize the perspective camera's viewport, given as an RGB image, within a set of panoramic semantic layout representations of the indoor environment. The panoramas are rendered from an untextured 3D reference model, which only comprises approximate structural information about room shapes, along with door and window annotations. We demonstrate that a straightforward convolutional network structure can successfully achieve image-to-panorama and ultimately image-to-model matching. Through a viewport classification score, we rank reference panoramas and select the best match for the query image. Then, a 6D relative pose is estimated between the chosen panorama and query image. Our experiments demonstrate that this approach not only efficiently bridges the domain gap but also generalizes well to previously unseen scenes that are not part of the training data. Moreover, it achieves superior localization accuracy compared to the state of the art methods and also estimates more degrees of freedom of the camera pose.
               </p>
             </div>
           </div>
@@ -187,19 +203,143 @@
     </section>
 
 
-    <section class="section hero is-small">
+    <section class="section hero is-small" id="results-table">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered has-text-centered">
+          <div class="column is-four-fifths">
+            <h2 class="title is-3">Results</h2>
+            <div class="content has-text-justified">
+              <p>
+				SPVLoc estimates the 6D camera pose of a query image relative to an untextured <b>3D reference model</b> with semantic annotations. It establishes the perspective relation between the rendered panorama and the query image by predicting the viewport of the camera within a set of rendered panoramas. 
+				</p>	
+				<p>
+				Compared to current <b>floor plan–based localization methods</b>, the pose estimation accuracy improves significantly despite requiring only minimal additional information. 
+				Specifically, only the heights of doors, windows, and the ceiling are needed to convert a 2D plan into a 3D model. 
+				The 3D reference further enables estimation of the camera height and the full 3D rotation matrix (3DOF).				
+				<table style="width:100%; border-collapse: collapse; font-family: Arial, sans-serif; text-align: center; margin-top: 25px;">
+				  <thead style="background-color: #f2f2f2;">
+					<tr>
+					  <th rowspan="2" style="white-space: nowrap; text-align: left; vertical-align: middle;">Method (Venue)</th>
+					  <th colspan="4">Structured3D (full) R@</th>
+					  <th rowspan="2" style="vertical-align: middle;">Uses semantics</th>
+					  <th rowspan="2" style="vertical-align: middle;">Reference Model</th>
+					</tr>
+					<tr>
+					  <th style="white-space: nowrap;">0.1m <sup>↑</sup></th>
+					  <th style="white-space: nowrap;">0.5m <sup>↑</sup></th>
+					  <th style="white-space: nowrap;">1m <sup>↑</sup></th>
+					  <th style="white-space: nowrap;">1m 30°<sup>↑</sup></th>
+					</tr>
+				  </thead>
+				  <tbody>
+					<tr>
+					  <td style="white-space: nowrap; text-align: left;">
+					  <a href="https://openaccess.thecvf.com/content/CVPR2024/papers/Chen_F3Loc_Fusion_and_Filtering_for_Floorplan_Localization_CVPR_2024_paper.pdf"
+					   target="_blank"
+					   title="Chen, C., Wang, R., Vogel, C., Pollefeys, M. F3Loc: Fusion and Filtering for Floorplan Localization. CVPR 2024.">
+					   F<sup>3</sup>Loc (CVPR 2024)</
+					   </a>   
+					  <td>1.5</td>
+					  <td>14.6</td>
+					  <td>22.4</td>
+					  <td>21.3</td>
+					  <td>no</td>
+					  <td>2D</td>
+					</tr>
+					<tr>
+					<td style="white-space: nowrap; text-align: left;">
+					<a href="https://dl.acm.org/doi/10.1145/3746027.3754504"
+					   target="_blank"
+					   title="Chen, B., Kang, J., Yang, H., Zhong, P., Wang, J. Perspective from a Higher Dimension: Can 3D Geometric Priors Help Visual Floorplan Localization? ACM MM 2025.">
+					   3DP (ACM MM 2025)
+					   </a> 
+					  </td>  
+					  <td>5.6</td>
+					  <td>27.4</td>
+					  <td>55.5</td>
+					  <td>24.0</td>
+					  <td>no</td>
+					  <td>2D</td>
+					</tr>
+					<tr>
+						<td style="white-space: nowrap; text-align: left;">
+						<a href="https://arxiv.org/abs/2508.01216"
+					   target="_blank"
+					   title="Chen, B., Yan, S., Cui, Y., Kang, J., Zhong, P., Wang, J. Perspective from a Broader Context: Can Room Style Knowledge Help Visual Floorplan Localization? AAAI 2026.">
+					   RSK (AAAI 2026)
+					   </a> 
+					  </td>  
+					  <td>6.4</td>
+					  <td>28.6</td>
+					  <td>56.9</td>
+					  <td>25.2</td>
+					  <td>no</td>
+					  <td>2D</td>
+					</tr>
+					<tr>
+						<td style="white-space: nowrap; text-align: left;">
+						<a href="https://xiaowuguiovo.github.io/DisCo-FLoc_Project_Website/"
+					   target="_blank"
+					   title="Meng, S., Zou, T., Chen, B., Mu, C., Wang, J. DisCo-FLoc: Using Dual-Level Visual-Geometric Contrasts to Disambiguate Depth-Aware Visual Floorplan Localization. arxiv 2026.">
+					   DicCo-FLoc (arXiv 2026)
+					   </a> 
+					  <td>10.0</td>
+					  <td>59.0</td>
+					  <td>67.0</td>
+					  <td>66.0</td>
+					  <td>no</td>
+					  <td>2D</td>
+					</tr>
+					<tr style="background-color: #f9f9f9;">
+					   <td style="white-space: nowrap; text-align: left;">
+						<a href="https://tau-vailab.github.io/SemRayLoc/"
+					   target="_blank"
+					   title="Grader, Y., Averbuch-Elor. Supercharging Floorplan Localization with Semantic Rays. ICCV 2024.">
+					   SemRayLoc (ICCV 2025)
+					   </a> 
+					   <td>5.7</td>
+					  <td>45.5</td>
+					  <td>58.8</td>
+					  <td>57.5</td>
+					  <td>yes</td>
+					  <td>2D</td>
+					</tr>
+					<tr style="font-weight: bold; background-color: #d9edf7;">
+					<td style="white-space: nowrap; text-align: left;">
+						<a href="https://github.com/fraunhoferhhi/spvloc?tab=readme-ov-file"
+					   target="_blank"
+					   title="Gard, N., Hilsmann, A., Eisert, P. SPVLoc: Semantic Panoramic Viewport Matching for 6D Camera Localization in Unseen Environments. ECCV 2024.">
+					   SPVLoc (ECCV 2024)
+					</a>
+					  </td> 
+					   <td>33.5</td>
+					  <td>81.6</td>
+					  <td>84.5</td>
+					  <td>84.2</td>
+					  <td>yes</td>
+					  <td>3D</td>
+					</tr>
+				  </tbody>
+				  <caption style="caption-side: bottom; font-weight: 600; margin-top: 8px;">
+					Recall performance on the Structured3D (S3D) dataset.
+				  </caption>
+				</table>			
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section hero is-small" style="padding-top: 0.5rem; padding-bottom: 0.5rem;"> 
       <div class="container is-max-desktop">
         <div class="columns is-centered has-text-centered">
           <div class="column is-four-fifths">
             <h2 class="title is-3">Examples</h2>
             <div class="content has-text-justified">
-              <p>
-				SPVLoc estimates the 6D camera pose of a query image relative to an untextured 3D reference model with semantic annotations. It establishes the perspective relation between the rendered panorama and the query image by predicting the viewport of the camera within a set of rendered panoramas. 
-				</p>
 				<p>
 				The visualization includes the input image in the top row, the model rendered with the estimated top-1 pose in the second row, the selected reference panorama with the estimated viewport in the third row, and a map showing the estimated position (green circle) alongside the ground truth position (gray circles with radii of 50cm, and 100cm) in the bottom row.
               </p>
-            </div>
+				</div>
           </div>
         </div>
       </div>
@@ -238,7 +378,6 @@
         </div>
       </div>
     </section>
-
 
     <!--BibTex citation -->
     <section class="section" id="BibTeX">
